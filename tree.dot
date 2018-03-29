@@ -1,0 +1,33 @@
+digraph Tree {
+node [shape=box, style="filled, rounded", color="black", fontname=helvetica] ;
+edge [fontname=helvetica] ;
+0 [label="petal length (cm) <= 2.45\nimpurity = 0.6623\nsamples = 100\nvalue = [53, 55, 42]\nclass = versicolor", fillcolor="#39e58105"] ;
+1 [label="impurity = 0.0\nsamples = 37\nvalue = [53, 0, 0]\nclass = setosa", fillcolor="#e58139ff"] ;
+0 -> 1 [labeldistance=2.5, labelangle=45, headlabel="True"] ;
+2 [label="petal width (cm) <= 1.75\nimpurity = 0.491\nsamples = 63\nvalue = [0, 55, 42]\nclass = versicolor", fillcolor="#39e5813c"] ;
+0 -> 2 [labeldistance=2.5, labelangle=-45, headlabel="False"] ;
+3 [label="petal length (cm) <= 4.95\nimpurity = 0.1327\nsamples = 40\nvalue = [0, 52, 4]\nclass = versicolor", fillcolor="#39e581eb"] ;
+2 -> 3 ;
+4 [label="impurity = 0.0\nsamples = 35\nvalue = [0, 51, 0]\nclass = versicolor", fillcolor="#39e581ff"] ;
+3 -> 4 ;
+5 [label="sepal width (cm) <= 2.9\nimpurity = 0.32\nsamples = 5\nvalue = [0, 1, 4]\nclass = virginica", fillcolor="#8139e5bf"] ;
+3 -> 5 ;
+6 [label="impurity = 0.0\nsamples = 3\nvalue = [0, 0, 3]\nclass = virginica", fillcolor="#8139e5ff"] ;
+5 -> 6 ;
+7 [label="petal width (cm) <= 1.65\nimpurity = 0.5\nsamples = 2\nvalue = [0, 1, 1]\nclass = versicolor", fillcolor="#39e58100"] ;
+5 -> 7 ;
+8 [label="impurity = 0.0\nsamples = 1\nvalue = [0, 0, 1]\nclass = virginica", fillcolor="#8139e5ff"] ;
+7 -> 8 ;
+9 [label="impurity = 0.0\nsamples = 1\nvalue = [0, 1, 0]\nclass = versicolor", fillcolor="#39e581ff"] ;
+7 -> 9 ;
+10 [label="sepal length (cm) <= 5.95\nimpurity = 0.1356\nsamples = 23\nvalue = [0, 3, 38]\nclass = virginica", fillcolor="#8139e5eb"] ;
+2 -> 10 ;
+11 [label="sepal length (cm) <= 5.85\nimpurity = 0.48\nsamples = 3\nvalue = [0, 3, 2]\nclass = versicolor", fillcolor="#39e58155"] ;
+10 -> 11 ;
+12 [label="impurity = 0.0\nsamples = 2\nvalue = [0, 0, 2]\nclass = virginica", fillcolor="#8139e5ff"] ;
+11 -> 12 ;
+13 [label="impurity = 0.0\nsamples = 1\nvalue = [0, 3, 0]\nclass = versicolor", fillcolor="#39e581ff"] ;
+11 -> 13 ;
+14 [label="impurity = 0.0\nsamples = 20\nvalue = [0, 0, 36]\nclass = virginica", fillcolor="#8139e5ff"] ;
+10 -> 14 ;
+}
