@@ -36,3 +36,12 @@ def read_tic_tac_toe_dataset():
     dv_data[y_column]=data[y_column]
     data=dv_data
     return data, dv.feature_names_, y_column
+def get_dataset_by_string(s):
+    if s=='iris':
+        return read_iris_data()
+    elif s=='winery':
+        return read_winery_data()
+    elif s=='breast cancer':
+        return read_breast_cancer_data()
+    elif s=='tic-tac-toe':
+        return read_tic_tac_toe_dataset()

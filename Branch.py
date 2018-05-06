@@ -24,17 +24,17 @@ class Branch:
         """
         if bound == 'lower':
             if self.features_lower[feature] < threshold:
-                self.features_lower[feature] = np.round(threshold, 2)
+                self.features_lower[feature] = threshold
         else:
             if self.features_upper[feature] > threshold:
-                self.features_upper[feature] = np.round(threshold, 2)
+                self.features_upper[feature] = threshold
     def contradictBranch(self, other_branch):
         """
         check wether Branch b can be merged with the "self" Branch. Returns Boolean answer.
         """
-        if np.sum(np.array(other_branch.features_upper) > np.array(self.features_lower)) != self.number_of_features or \
-                                np.sum(np.array(other_branch.features_lower) < np.array(self.features_upper)) != self.number_of_features:
-            return True
+        for i in range(self.number_of_features):
+            if self.features_upper[i] <= other_branch.features_lower[i] or self.features_lower[i] >= other_branch.features_upper[i]:
+                return True
         return False
     def mergeBranch(self, other_branch):
         """
@@ -62,7 +62,7 @@ class Branch:
                 s +=  self.feature_names[feature] + ' <= ' + str(np.round(threshold,3)) + ", "
         s += 'labels: ['
         for k in range(len(self.label_probas)):
-            s+=self.label_names[k]+' : '+str(self.label_probas[k])+' '
+            s+=str(self.label_names[k])+' : '+str(self.label_probas[k])+' '
         s+=']'
         s+=' Number of samples: '+str(self.number_of_samples)
         return s
@@ -80,29 +80,36 @@ class Branch:
         # Return the predicted label accordint to the branch
         return np.argmax(self.label_probas)
     def containsInstance(self, v):
-        if np.sum(self.features_upper>=v)==len(v) and np.sum(self.features_lower<v)==len(v):
-            return True
-        return False
-    def get_branch_records(self):
+        for i,lower,upper in zip(range(len(v)),self.features_lower,self.features_upper):
+            if v[i]>upper or v[i]<=lower:
+                return False
+        return True
+    def get_branch_records(self,thresholds_dict):
         returned_records=[]
         features={}
         for feature,value in enumerate(self.features_upper):
             if value==np.inf:
                 continue
-            features[str(feature)+'<='+str(value)]=1
-        for feature,value in enumerate(self.features_lower):
-            if value==-np.inf:
-                continue
-            features[str(feature)+'>'+str(value)]=1
+            for threshold in thresholds_dict[feature]:
+                if threshold >= value:
+                    features[str(feature)+'<'+str(threshold)]=1
         for proba,label_name in zip(self.label_probas,self.label_names):
             d={'label':label_name,'weight':proba,'num_of_samples':self.number_of_samples}
             d.update(features)
             returned_records.append(d)
+
         return returned_records
     def calculate_branch_probability_by_ecdf(self, ecdf):
-        features_probabilities=[]
+        epsilon=0.00001
+        features_probabilities=1
         for i,lower,upper in zip(range(len(ecdf.keys())),self.features_lower,self.features_upper):
             probs=ecdf[i]([lower,upper])
-            features_probabilities.append(probs[1]-probs[0])
-        return reduce(mul, features_probabilities, 1)
+            features_probabilities=features_probabilities*(probs[1]-probs[0]+ epsilon)
+        return features_probabilities
+    def is_excludable_branch(self):
+        if max(self.label_probas)/np.sum(self.label_probas)>0.99:
+            return True
+        return False
+
+
 
