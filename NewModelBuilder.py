@@ -1,14 +1,14 @@
 import numpy as np
 import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
+from Node import *
 from sklearn.model_selection import GridSearchCV
 
 class NewModelBuilder():
     def __init__(self,df):
         self.df=df
-        self.input_feature_names = [col for col in self.df.columns if '<' in col and 'inf' not in col]
     def train_new_model(self):
-        X = self.df[self.input_feature_names].as_matrix()
+        root=Node(self.df.inex)
         try:
             Y = self.df['label']
         except:

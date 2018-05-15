@@ -2,6 +2,7 @@ import numpy as np
 from operator import mul
 from operator import mul
 from functools import reduce
+EPSILON=0.00001
 class Branch:
     def __init__(self,feature_names,label_names,label_probas=None,number_of_samples=None):
         """Branch inatance can be initialized in 2 ways. One option is to initialize an empty branch
@@ -33,7 +34,7 @@ class Branch:
         check wether Branch b can be merged with the "self" Branch. Returns Boolean answer.
         """
         for i in range(self.number_of_features):
-            if self.features_upper[i] <= other_branch.features_lower[i] or self.features_lower[i] >= other_branch.features_upper[i]:
+            if self.features_upper[i] <= other_branch.features_lower[i] + EPSILON or self.features_lower[i] + EPSILON >= other_branch.features_upper[i]:
                 return True
         return False
     def mergeBranch(self, other_branch):
@@ -56,10 +57,12 @@ class Branch:
         s = ""
         for feature, threshold in enumerate(self.features_lower):
             if threshold != (-np.inf):
-                s +=  self.feature_names[feature] + ' > ' + str(np.round(threshold,3)) + ", "
+                #s +=  self.feature_names[feature] + ' > ' + str(np.round(threshold,3)) + ", "
+                s += str(feature) + ' > ' + str(np.round(threshold, 3)) + ", "
         for feature, threshold in enumerate(self.features_upper):
             if threshold != np.inf:
-                s +=  self.feature_names[feature] + ' <= ' + str(np.round(threshold,3)) + ", "
+                #s +=  self.feature_names[feature] + ' <= ' + str(np.round(threshold,3)) + ", "
+                s += str(feature) + ' <= ' + str(np.round(threshold, 3)) + ", "
         s += 'labels: ['
         for k in range(len(self.label_probas)):
             s+=str(self.label_names[k])+' : '+str(self.label_probas[k])+' '
@@ -84,21 +87,16 @@ class Branch:
             if v[i]>upper or v[i]<=lower:
                 return False
         return True
-    def get_branch_records(self,thresholds_dict):
-        returned_records=[]
+    def get_branch_dict(self,ecdf):
         features={}
-        for feature,value in enumerate(self.features_upper):
-            if value==np.inf:
-                continue
-            for threshold in thresholds_dict[feature]:
-                if threshold >= value:
-                    features[str(feature)+'<'+str(threshold)]=1
-        for proba,label_name in zip(self.label_probas,self.label_names):
-            d={'label':label_name,'weight':proba,'num_of_samples':self.number_of_samples}
-            d.update(features)
-            returned_records.append(d)
+        for feature,upper_value,lower_value in zip(range(len(self.features_upper)),self.features_upper,self.features_lower):
+            features[str(feature)+'_upper']=upper_value
+            features[str(feature)+'_lower']=lower_value
+        features['number_of_samples']=self.number_of_samples
+        features['branch_probability'] = self.calculate_branch_probability_by_ecdf(ecdf)
+        features['probas']=self.label_probas
+        return  features
 
-        return returned_records
     def calculate_branch_probability_by_ecdf(self, ecdf):
         epsilon=0.00001
         features_probabilities=1

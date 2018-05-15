@@ -81,15 +81,8 @@ class ConjunctionSet():
         #print('number of branches after filterring: ' + str(len(new_conjunction_set)))
         self.number_of_branches_per_iteration.append(len(new_conjunction_set))
         return new_conjunction_set
-    def enrich_conjunction_set(self):
-        for b in self.conjunctionSet:
-            for feature in b.featu
     def get_conjunction_set_df(self):
-        records = []
-        self.create_thresholds_dict()
-        for b in self.conjunctionSet:
-            records.extend(b.get_branch_records(self.thresholds_dict))
-        return pd.DataFrame(records).fillna(0)
+        return pd.DataFrame([b.get_branch_dict(self.ecdf_dict) for b in self.conjunctionSet])
     def predict(self,X):
         predictions=[]
         for inst in X:
@@ -103,11 +96,5 @@ class ConjunctionSet():
                 return conjunction
     def set_ecdf(self,data):
         self.ecdf_dict={indx:ECDF(data[col])for indx,col in enumerate(self.feature_names)}
-    def create_thresholds_dict(self):
-        self.thresholds_dict={i:set() for i in range(len(self.feature_names))}
-        for branch in self.conjunctionSet:
-            for i in range(len(self.feature_names)):
-                self.thresholds_dict[i].add(branch.features_upper[i])
-
 
 
