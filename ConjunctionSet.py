@@ -4,13 +4,14 @@ import pandas as pd
 from statsmodels.distributions.empirical_distribution import ECDF
 
 class ConjunctionSet():
-    def __init__(self,feature_names,original_data,model,amount_of_branches_threshold,filter_approach):
-        self.amount_of_branches_threshold=amount_of_branches_threshold
-        self.original_data=original_data
-        self.model=model
-        self.feature_names=feature_names
-        self.label_names=model.classes_
-        self.filter_approach=filter_approach
+    def __init__(self,feature_names,original_data,model,amount_of_branches_threshold,filter_approach, exclusion_starting_point=10):
+        self.amount_of_branches_threshold = amount_of_branches_threshold
+        self.original_data = original_data
+        self.model = model
+        self.feature_names = feature_names
+        self.label_names = model.classes_
+        self.filter_approach = filter_approach
+        self.exclusion_starting_point = exclusion_starting_point
         self.set_ecdf(original_data)
         self.generateBranches()
         self.number_of_branches_per_iteration = []
@@ -45,7 +46,7 @@ class ConjunctionSet():
             #print('Iteration '+str(i+1)+": "+str(len(conjunctionSet))+" conjunctions")
             conjunctionSet=self.merge_branch_with_conjunctionSet(branch_list,conjunctionSet)
             print('i='+str(i))
-            if i>3:
+            if i >= self.exclusion_starting_point:
                 conjunctionSet,this_iteration_exclusions=self.exclude_branches_from_cs(conjunctionSet)
                 excluded_branches.extend(this_iteration_exclusions)
                 print('Number of exclusions: '+str(len(excluded_branches)))
@@ -61,7 +62,7 @@ class ConjunctionSet():
                 filtered_cs.append(branch)
         return filtered_cs,excludable_brancehs
     def filter_conjunction_set(self,cs):
-        if len(cs)<=self.amount_of_branches_threshold:
+        if len(cs) <= self.amount_of_branches_threshold:
             return cs
         if self.filter_approach=='probability':
             branches_metrics=[b.calculate_branch_probability_by_ecdf(self.ecdf_dict) for b in cs]
@@ -76,9 +77,9 @@ class ConjunctionSet():
         new_conjunction_set=[]
         for b1 in conjunctionSet:
             new_conjunction_set.extend([b1.mergeBranch(b2) for b2 in branch_list if b1.contradictBranch(b2)==False])
-        #print('number of branches before filterring: '+str(len(new_conjunction_set)))
+        print('number of branches before filterring: '+str(len(new_conjunction_set)))
         new_conjunction_set=self.filter_conjunction_set(new_conjunction_set)
-        #print('number of branches after filterring: ' + str(len(new_conjunction_set)))
+        print('number of branches after filterring: ' + str(len(new_conjunction_set)))
         self.number_of_branches_per_iteration.append(len(new_conjunction_set))
         return new_conjunction_set
     def get_conjunction_set_df(self):
@@ -96,5 +97,35 @@ class ConjunctionSet():
                 return conjunction
     def set_ecdf(self,data):
         self.ecdf_dict={indx:ECDF(data[col])for indx,col in enumerate(self.feature_names)}
-
-
+    def group_by_label_probas(self,conjunctionSet):
+        probas_hashes={}
+        for i,b in enumerate(conjunctionSet):
+            probas_hash = hash(tuple(b.label_probas))
+            if probas_hash not in probas_hashes:
+                probas_hashes[probas_hash]=[]
+            probas_hashes[probas_hash].append(i)
+        return probas_hashes
+    def inner_merge(self, conjuncrionSet):
+        probas_groups = self.group_by_label_probas(conjuncrionSet)
+        new_branches=[]
+        exclude_indexes = []
+        print(probas_groups)
+        for k in probas_groups:
+            for index1 in range(len(probas_groups[k])):
+                for index2 in range(index1+1,len(probas_groups[k])):
+                    if probas_groups[k][index1] in exclude_indexes or probas_groups[k][index2] in exclude_indexes:
+                        continue
+                    print('k: '+str(k))
+                    print("index1: "+str(index1))
+                    print("index2: " + str(index2))
+                    b1 = conjuncrionSet[probas_groups[k][index1]]
+                    b2 = conjuncrionSet[probas_groups[k][index2]]
+                    if b1.is_addable(b2):
+                        new_branches.append(b1.add_branch(b2))
+                        exclude_indexes.append(probas_groups[k][index1])
+                        exclude_indexes.append(probas_groups[k][index2])
+                    print("len excluded: " + str(len(exclude_indexes)))
+                    print("len new branches: " + str(len(new_branches)))
+                    print('----------------------')
+            new_branches.extend([conjuncrionSet[indx] for indx in probas_groups[k] if indx not in exclude_indexes])
+        return new_branches

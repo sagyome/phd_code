@@ -105,9 +105,20 @@ class Branch:
             features_probabilities=features_probabilities*(probs[1]-probs[0]+ epsilon)
         return features_probabilities
     def is_excludable_branch(self):
-        if max(self.label_probas)/np.sum(self.label_probas)>0.99:
+        if max(self.label_probas)/np.sum(self.label_probas)>0.8:
             return True
         return False
-
+    def is_addable(self,other):
+        for feature in range(self.number_of_features):
+            if self.features_upper[feature] + EPSILON < other.features_lower[feature] or other.features_upper[feature] + EPSILON < self.features_lower[feature]:
+                return False
+        return True
+    def add_branch(self,other):
+        new_number_of_samples = np.sqrt(self.number_of_samples * other.number_of_samples)
+        new_b = Branch(self.feature_names, self.label_names, self.label_probas, new_number_of_samples)
+        for feature in range(self.number_of_features):
+            new_b.features_upper[feature] = max(self.features_upper[feature],other.features_upper[feature])
+            new_b.features_lower[feature] = min(self.features_lower[feature],other.features_lower[feature])
+        return new_b
 
 
