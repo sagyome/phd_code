@@ -50,15 +50,16 @@ class ExperimentSetting():
             rf = RandomForestClassifier(n_estimators=num_of_estimators,**self.fixed_params)
             rf.fit(train_x, train_y)
             result_dict['random forest training time']=(datetime.datetime.now()-start_temp).microseconds
+            self.classes_=rf.classes_
 
             #Create the conjunction set
             start_temp = datetime.datetime.now()
-            cs = ConjunctionSet(x_columns, df, rf,self.number_of_branches_threshold,filter_approach)
+            cs = ConjunctionSet(x_columns, df, rf,hyper_parameters_dict['threshold'],filter_approach)
             result_dict['conjunction set training time'] = (datetime.datetime.now() - start_temp).microseconds
             result_dict['number of branches per iteration'] = cs.number_of_branches_per_iteration
             result_dict['number_of_branches'] = len(cs.conjunctionSet)
 
-            #Train the new model
+            #Train the new model...
             start_temp = datetime.datetime.now()
             branches_df = cs.get_conjunction_set_df().round(decimals=5)
             for i in range(2):
@@ -77,7 +78,7 @@ class ExperimentSetting():
             result_dict['decision tree training time'] = (datetime.datetime.now() - start_temp).microseconds
             #record experiment results
             result_dict.update(self.ensemble_measures(test_x,test_y,rf))
-            result_dict.update(self.new_model_measures(test_x,test_y,new_model))
+            result_dict.update(self.new_model_measures(test_x,test_y,new_model,branches_df))
             result_dict.update(self.decision_tree_measures(test_x,test_y,decision_tree_model))
             self.experiments.append(result_dict)
     def decision_tree_measures(self,X,Y,dt_model):
@@ -95,19 +96,19 @@ class ExperimentSetting():
         result_dict['decision_tree_accuracy'] = np.sum(predictions == Y) / len(Y)
         result_dict['decision_tree_auc'] = self.get_auc(Y, np.array(probas),dt_model.classes_)
         return result_dict
-    def new_model_measures(self,X,Y,new_model):
+    def new_model_measures(self,X,Y,new_model,branches_df):
         result_dict={}
         probas,depths=[],[]
         for inst in X:
-            prob,depth=new_model.predict_instance_probas(inst)
+            prob,depth=new_model.predict_probas_and_depth(inst,branches_df)
             probas.append(prob)
             depths.append(depth)
-        predictions=[new_model_builder.model.classes_[i] for i in np.array([np.argmax(prob) for prob in probas])]
+        predictions=[self.classes_[i] for i in np.array([np.argmax(prob) for prob in probas])]
         result_dict['new_model_average_depth']=np.mean(depths)
         result_dict['new_model_min_depth'] = np.min(depths)
         result_dict['new_model_max_depth'] = np.max(depths)
         result_dict['new_model_accuracy'] = np.sum(predictions==Y) / len(Y)
-        result_dict['new_model_auc']=self.get_auc(Y,np.array(probas),new_model_builder.model.classes_)
+        result_dict['new_model_auc']=self.get_auc(Y,np.array(probas),self.classes_)
         return result_dict
     def ensemble_measures(self,X,Y,rf):
         result_dict={}
@@ -121,6 +122,8 @@ class ExperimentSetting():
         result_dict['sklearn_vs_our_ensemble_predictions_disagreements']=np.sum([np.sum(i)!=0 for i in ensemble_probas-predictions])
         result_dict['ensemble_accuracy']=np.sum(rf.predict(X)==Y)/len(Y)
         result_dict['ensemble_auc']=self.get_auc(Y,ensemble_probas,rf.classes_)
+        if result_dict['sklearn_vs_our_ensemble_predictions_disagreements']>0:
+            result_dict['disagreement_instance'] = [str(i)+' | '+ str(j) for i,j in zip(ensemble_probas,predictions) if np.sum(i=j)!=0]
         return result_dict
     def ensemble_prediction(self,X, rf):
         predictions = []
@@ -166,5 +169,4 @@ class ExperimentSetting():
         clfGS = GridSearchCV(model, parameters, cv=3)
         clfGS.fit(train_x, train_y)
         model = clfGS.best_estimator_
-        model.fit(train_x, train_y)
-        return model
+        model.f

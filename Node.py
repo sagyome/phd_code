@@ -6,7 +6,7 @@ class Node():
     def __init__(self,mask):
         self.mask=mask
     def split(self,df):
-        if np.sum(self.mask)==1:# or self.has_same_class(df):
+        if np.sum(self.mask)==1 or self.has_same_class(df):
             self.left=None
             self.right=None
             return
@@ -42,7 +42,7 @@ class Node():
         feature_to_metric={}
         for feature in self.features:
            value,metric=self.check_feature_split_value(df,feature)
-           feature_to_value[feature]=value
+           feature_to_value[feature] = value
            feature_to_metric[feature] = metric
         feature = min(feature_to_metric, key=feature_to_metric.get)
         return feature,feature_to_value[feature]
@@ -50,6 +50,8 @@ class Node():
     def check_feature_split_value(self,df,feature):
         value_to_metric={}
         values=list(set(list(df[str(feature)+'_upper'][self.mask])+list(df[str(feature)+'_lower'][self.mask])))
+        np.random.shuffle(values)
+        values=values[:3]
         for value in values:
             left_mask=[True if upper <= value  else False for upper in df[str(feature)+"_upper"]]
             right_mask=[True if lower>= value else False for lower in df[str(feature)+'_lower']]

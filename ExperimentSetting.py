@@ -49,19 +49,18 @@ class ExperimentSetting():
             start_temp=datetime.datetime.now()
             rf = RandomForestClassifier(n_estimators=num_of_estimators,**self.fixed_params)
             rf.fit(train_x, train_y)
-            result_dict['random forest training time']=(datetime.datetime.now()-start_temp).microseconds
+            result_dict['random forest training time']=(datetime.datetime.now()-start_temp).total_seconds()
             self.classes_=rf.classes_
-
             #Create the conjunction set
             start_temp = datetime.datetime.now()
             cs = ConjunctionSet(x_columns, df, rf,hyper_parameters_dict['max_number_of_branches'],filter_approach)
-            result_dict['conjunction set training time'] = (datetime.datetime.now() - start_temp).microseconds
+            result_dict['conjunction set training time'] = (datetime.datetime.now() - start_temp).total_seconds()
             result_dict['number of branches per iteration'] = cs.number_of_branches_per_iteration
             result_dict['number_of_branches'] = len(cs.conjunctionSet)
-
             #Train the new model
             start_temp = datetime.datetime.now()
             branches_df = cs.get_conjunction_set_df().round(decimals=5)
+            result_dict['number_of_features_for_new_model'] = len(branches_df.columns)
             for i in range(2):
                 branches_df[rf.classes_[i]] = [probas[i] for probas in branches_df['probas']]
             df_dict = {}
@@ -69,13 +68,13 @@ class ExperimentSetting():
                 df_dict[col] = branches_df[col].values
             new_model = Node([True]*len(branches_df))
             new_model.split(df_dict)
-            result_dict['new model training time'] = (datetime.datetime.now() - start_temp).microseconds
+            result_dict['new model training time'] = (datetime.datetime.now() - start_temp).total_seconds()
 
 
             #Train a decision tree
             start_temp = datetime.datetime.now()
             decision_tree_model=self.fit_decision_tree_model(train_x, train_y)
-            result_dict['decision tree training time'] = (datetime.datetime.now() - start_temp).microseconds
+            result_dict['decision tree training time'] = (datetime.datetime.now() - start_temp).total_seconds()
             #record experiment results
             result_dict.update(self.ensemble_measures(test_x,test_y,rf))
             result_dict.update(self.new_model_measures(test_x,test_y,new_model,branches_df))
@@ -109,6 +108,9 @@ class ExperimentSetting():
         result_dict['new_model_max_depth'] = np.max(depths)
         result_dict['new_model_accuracy'] = np.sum(predictions==Y) / len(Y)
         result_dict['new_model_auc']=self.get_auc(Y,np.array(probas),self.classes_)
+        result_dict['new_model_number_of_nodes'] = new_model.number_of_children()
+        result_dict['new_model_probas'] = probas
+
         return result_dict
     def ensemble_measures(self,X,Y,rf):
         result_dict={}
@@ -122,6 +124,7 @@ class ExperimentSetting():
         result_dict['sklearn_vs_our_ensemble_predictions_disagreements']=np.sum([np.sum(i)!=0 for i in ensemble_probas-predictions])
         result_dict['ensemble_accuracy']=np.sum(rf.predict(X)==Y)/len(Y)
         result_dict['ensemble_auc']=self.get_auc(Y,ensemble_probas,rf.classes_)
+        result_dict['ensemble_probas'] = ensemble_probas
         return result_dict
     def ensemble_prediction(self,X, rf):
         predictions = []
