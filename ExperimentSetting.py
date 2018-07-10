@@ -14,13 +14,14 @@ from sklearn.metrics import roc_curve, auc
 
 class ExperimentSetting():
     def __init__(self,number_of_branches_threshold,df_names,number_of_estimators_list,fixed_params,
-                 num_of_iterations=50,filter_approaches=['probability','number_of_samples','combination']):
+                 num_of_iterations=50,filter_approaches=['probability','number_of_samples','combination'],parallels=[False]):
         self.num_of_iterations=num_of_iterations
         self.number_of_branches_threshold = number_of_branches_threshold
         self.df_names = df_names
         self.fixed_params = fixed_params
         self.number_of_esitmators = number_of_estimators_list
         self.filter_approaches = filter_approaches
+        self.parallels = parallels
     def run(self):
         self.experiments=[]
         for threshold in self.number_of_branches_threshold:
@@ -28,13 +29,15 @@ class ExperimentSetting():
                 df,x_columns,y_column=get_dataset_by_string(df_name)
                 for num_of_estimators in self.number_of_esitmators:
                     for filter_approach in self.filter_approaches:
-                        d={}
-                        d['number_of_estimators']=num_of_estimators
-                        d['max_number_of_branches']=threshold
-                        d['df_name']=df_name
-                        d['filter_approach']=filter_approach
-                        print(d)
-                        self.run_experiment(threshold,df,x_columns,y_column,d)
+                        for parallel in self.parallels:
+                            d={}
+                            d['number_of_estimators']=num_of_estimators
+                            d['max_number_of_branches']=threshold
+                            d['df_name']=df_name
+                            d['filter_approach']=filter_approach
+                            d['parallel'] = parallel
+                            print(d)
+                            self.run_experiment(threshold,df,x_columns,y_column,d)
 
     def run_experiment(self,branch_probability_threshold,df,x_columns,y_column,hyper_parameters_dict):
         for i in range(self.num_of_iterations):
@@ -66,7 +69,7 @@ class ExperimentSetting():
             df_dict = {}
             for col in branches_df.columns:
                 df_dict[col] = branches_df[col].values
-            new_model = Node([True]*len(branches_df))
+            new_model = Node([True]*len(branches_df),hyper_parameters_dict['parallel'])
             new_model.split(df_dict)
             result_dict['new model training time'] = (datetime.datetime.now() - start_temp).total_seconds()
 

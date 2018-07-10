@@ -2,7 +2,7 @@ import numpy as np
 from operator import mul
 from operator import mul
 from functools import reduce
-EPSILON=0.00001
+EPSILON=0.001
 class Branch:
     def __init__(self,feature_names,label_names,label_probas=None,number_of_samples=None):
         """Branch inatance can be initialized in 2 ways. One option is to initialize an empty branch

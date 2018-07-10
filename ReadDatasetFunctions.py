@@ -36,6 +36,21 @@ def read_tic_tac_toe_dataset():
     dv_data[y_column]=data[y_column]
     data=dv_data
     return data, dv.feature_names_, y_column
+def read_australian():
+    x_columns = ["A" + str(i) for i in range(14)]
+    y_column='class'
+    data = pd.read_csv("datasets/australian.dat", sep=" ", names=x_columns+['class'])
+    return data,x_columns,y_column
+def read_nurse():
+    x_columns = ['x' + str(i) for i in range(8)]
+    y_column='class'
+    data = pd.read_csv("datasets/post-operative.data", names=x_columns+[y_column])
+    dv = DictVectorizer()
+    dv_data = dv.fit_transform([dict(row) for index, row in data[x_columns].iterrows()])
+    dv_data = pd.DataFrame(dv_data.toarray(), columns=dv.feature_names_)
+    dv_data[y_column] = data[y_column]
+    data = dv_data
+    return data, dv.feature_names_, y_column
 def get_dataset_by_string(s):
     if s=='iris':
         return read_iris_data()
@@ -43,5 +58,9 @@ def get_dataset_by_string(s):
         return read_winery_data()
     elif s=='breast cancer':
         return read_breast_cancer_data()
+    elif s == 'aust_credit':
+        return read_australian()
+    elif s == 'nurse':
+        return read_nurse()
     elif s=='tic-tac-toe':
         return read_tic_tac_toe_dataset()

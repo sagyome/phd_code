@@ -2,6 +2,7 @@ from Branch import Branch
 import numpy as np
 import pandas as pd
 from statsmodels.distributions.empirical_distribution import ECDF
+from scipy.stats import entropy
 
 class ConjunctionSet():
     def __init__(self,feature_names,original_data,model,amount_of_branches_threshold,filter_approach, exclusion_starting_point=10):
@@ -43,14 +44,14 @@ class ConjunctionSet():
         conjunctionSet=self.branches_lists[0]
         excluded_branches=[]
         for i,branch_list in enumerate(self.branches_lists[1:]):
-            #print('Iteration '+str(i+1)+": "+str(len(conjunctionSet))+" conjunctions")
+            print('Iteration '+str(i+1)+": "+str(len(conjunctionSet))+" conjunctions")
             conjunctionSet=self.merge_branch_with_conjunctionSet(branch_list,conjunctionSet)
-            print('i='+str(i))
+            #print('i='+str(i))
             if i >= self.exclusion_starting_point:
                 conjunctionSet,this_iteration_exclusions=self.exclude_branches_from_cs(conjunctionSet)
                 excluded_branches.extend(this_iteration_exclusions)
-                print('Number of exclusions: '+str(len(excluded_branches)))
-                print('Number of remained: '+str(len(conjunctionSet)))
+                #print('Number of exclusions: '+str(len(excluded_branches)))
+                #print('Number of remained: '+str(len(conjunctionSet)))
         self.conjunctionSet=excluded_branches+conjunctionSet
     def exclude_branches_from_cs(self,cs):
         filtered_cs=[]
@@ -68,16 +69,18 @@ class ConjunctionSet():
             branches_metrics=[b.calculate_branch_probability_by_ecdf(self.ecdf_dict) for b in cs]
         elif self.filter_approach=='number_of_samples':
             branches_metrics = [b.number_of_samples for b in cs]
-        elif self.filter_approach=='combination':
-            branches_metrics = [b.calculate_branch_probability_by_ecdf(self.ecdf_dict)*b.number_of_samples for b in cs]
+        elif self.filter_approach=='probability_entropy':
+            branches_metrics = [b.calculate_branch_probability_by_ecdf(self.ecdf_dict)*(1-entropy(b.label_probas)) for b in cs]
+        elif self.filter_approach=='entropy':
+            branches_metrics = [-entropy(b.label_probas) for b in cs]
         threshold=sorted(branches_metrics,reverse=True)[self.amount_of_branches_threshold-1]
-        return [b for b,metric in zip(cs,branches_metrics) if metric >= threshold]
+        return [b for b,metric in zip(cs,branches_metrics) if metric >= threshold][:self.amount_of_branches_threshold]
 
     def merge_branch_with_conjunctionSet(self,branch_list,conjunctionSet):
         new_conjunction_set=[]
         for b1 in conjunctionSet:
             new_conjunction_set.extend([b1.mergeBranch(b2) for b2 in branch_list if b1.contradictBranch(b2)==False])
-        print('number of branches before filterring: '+str(len(new_conjunction_set)))
+        #print('number of branches before filterring: '+str(len(new_conjunction_set)))
         new_conjunction_set=self.filter_conjunction_set(new_conjunction_set)
         print('number of branches after filterring: ' + str(len(new_conjunction_set)))
         self.number_of_branches_per_iteration.append(len(new_conjunction_set))
@@ -109,7 +112,7 @@ class ConjunctionSet():
         probas_groups = self.group_by_label_probas(conjuncrionSet)
         new_branches=[]
         exclude_indexes = []
-        print(probas_groups)
+        #print(probas_groups)
         for k in probas_groups:
             for index1 in range(len(probas_groups[k])):
                 for index2 in range(index1+1,len(probas_groups[k])):

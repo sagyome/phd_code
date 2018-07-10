@@ -2,12 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="800159f0-87b6-42c3-943b-01c5d68c3c31" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Experiment.py___jb_tmp___" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SplittingFunctions.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.ipynb_checkpoints/Experiment test-checkpoint.ipynb" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Experiment test.ipynb" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Experiment test.ipynb" afterPath="$PROJECT_DIR$/Experiment test.ipynb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Experiment.py" afterPath="$PROJECT_DIR$/Experiment.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Branch.py" afterPath="$PROJECT_DIR$/Branch.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CDF development.ipynb" afterPath="$PROJECT_DIR$/CDF development.ipynb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConjunctionSet.py" afterPath="$PROJECT_DIR$/ConjunctionSet.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ExperimentSetting.py" afterPath="$PROJECT_DIR$/ExperimentSetting.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Node.py" afterPath="$PROJECT_DIR$/Node.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReadDatasetFunctions.py" afterPath="$PROJECT_DIR$/ReadDatasetFunctions.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Test branches builder.ipynb" afterPath="$PROJECT_DIR$/Test branches builder.ipynb" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,8 +26,8 @@
       <file leaf-file-name="Branch.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Branch.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="782">
-              <caret line="49" column="31" lean-forward="false" selection-start-line="49" selection-start-column="31" selection-end-line="49" selection-end-column="31" />
+            <state relative-caret-position="1632">
+              <caret line="99" column="4" lean-forward="false" selection-start-line="99" selection-start-column="4" selection-end-line="105" selection-end-column="37" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -31,11 +35,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ConjunctionSet.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ConjunctionSet.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ConjunctionSet.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+            <state relative-caret-position="385">
+              <caret line="76" column="117" lean-forward="false" selection-start-line="76" selection-start-column="117" selection-end-line="76" selection-end-column="117" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
               </folding>
@@ -46,21 +50,11 @@
       <file leaf-file-name="ExperimentSetting.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ExperimentSetting.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1241">
-              <caret line="85" column="17" lean-forward="false" selection-start-line="85" selection-start-column="17" selection-end-line="85" selection-end-column="17" />
+            <state relative-caret-position="442">
+              <caret line="38" column="33" lean-forward="false" selection-start-line="38" selection-start-column="28" selection-end-line="38" selection-end-column="33" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="experiment_backup.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/experiment_backup.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="25" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="169" selection-end-column="18" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -90,8 +84,8 @@
       <file leaf-file-name="ReadDatasetFunctions.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ReadDatasetFunctions.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="15" column="20" lean-forward="false" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="20" />
+            <state relative-caret-position="674">
+              <caret line="46" column="33" lean-forward="true" selection-start-line="46" selection-start-column="33" selection-end-line="46" selection-end-column="52" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -111,11 +105,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Node.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Node.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Node.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="735">
-              <caret line="52" column="8" lean-forward="false" selection-start-line="52" selection-start-column="8" selection-end-line="52" selection-end-column="8" />
+            <state relative-caret-position="34">
+              <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SplittingFunctions.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SplittingFunctions.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="14" column="43" lean-forward="false" selection-start-line="14" selection-start-column="43" selection-end-line="14" selection-end-column="43" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -135,8 +139,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>original_data</find>
-      <find>set_ec</find>
       <find>branch(</find>
       <find>merge_</find>
       <find>self.df</find>
@@ -146,7 +148,6 @@
       <find>get_bra</find>
       <find>get_bran</find>
       <find>set_ecdf</find>
-      <find>ecdf</find>
       <find>round</find>
       <find>check</find>
       <find>df</find>
@@ -164,7 +165,10 @@
       <find>hyp</find>
       <find>disag</find>
       <find>new model training time</find>
+      <find>ecdf</find>
       <find>get_value_metri</find>
+      <find>node</find>
+      <find>print</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -177,15 +181,16 @@
         <option value="$PROJECT_DIR$/ModelGenerator.py" />
         <option value="$PROJECT_DIR$/.ipynb_checkpoints/ReadDatasetFunctions.py" />
         <option value="$PROJECT_DIR$/DataPreperation.py" />
-        <option value="$PROJECT_DIR$/ReadDatasetFunctions.py" />
         <option value="$PROJECT_DIR$/RuleExtractor.py" />
         <option value="$PROJECT_DIR$/NewModelBuilder.py" />
         <option value="$PROJECT_DIR$/Experiment.py___jb_tmp___" />
-        <option value="$PROJECT_DIR$/ConjunctionSet.py" />
-        <option value="$PROJECT_DIR$/Branch.py" />
         <option value="$PROJECT_DIR$/Experiment.py" />
+        <option value="$PROJECT_DIR$/Branch.py" />
         <option value="$PROJECT_DIR$/Node.py" />
         <option value="$PROJECT_DIR$/ExperimentSetting.py" />
+        <option value="$PROJECT_DIR$/SplittingFunctions.py" />
+        <option value="$PROJECT_DIR$/ReadDatasetFunctions.py" />
+        <option value="$PROJECT_DIR$/ConjunctionSet.py" />
       </list>
     </option>
   </component>
@@ -214,7 +219,6 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -231,6 +235,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -262,7 +267,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17864583" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -315,16 +320,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/NewModelBuilder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="10" column="31" lean-forward="true" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/DataPreperation.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -363,9 +358,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="14" column="75" lean-forward="false" selection-start-line="14" selection-start-column="75" selection-end-line="14" selection-end-column="75" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -680,31 +673,10 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Experiment.py___jb_tmp___" />
-    <entry file="file://$PROJECT_DIR$/ConjunctionSet.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/experiment_backup.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="25" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="169" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Branch.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
-          <caret line="49" column="31" lean-forward="false" selection-start-line="49" selection-start-column="31" selection-end-line="49" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -715,20 +687,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ReadDatasetFunctions.py">
+    <entry file="file://$PROJECT_DIR$/SplittingFunctions.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
-          <caret line="15" column="20" lean-forward="false" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ExperimentSetting.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1241">
-          <caret line="85" column="17" lean-forward="false" selection-start-line="85" selection-start-column="17" selection-end-line="85" selection-end-column="17" />
+          <caret line="14" column="43" lean-forward="false" selection-start-line="14" selection-start-column="43" selection-end-line="14" selection-end-column="43" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
@@ -745,12 +707,50 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Node.py">
+    <entry file="file://$PROJECT_DIR$/Branch.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="735">
-          <caret line="52" column="8" lean-forward="false" selection-start-line="52" selection-start-column="8" selection-end-line="52" selection-end-column="8" />
+        <state relative-caret-position="1632">
+          <caret line="99" column="4" lean-forward="false" selection-start-line="99" selection-start-column="4" selection-end-line="105" selection-end-column="37" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Node.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ExperimentSetting.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="38" column="33" lean-forward="false" selection-start-line="38" selection-start-column="28" selection-end-line="38" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ReadDatasetFunctions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="674">
+          <caret line="46" column="33" lean-forward="true" selection-start-line="46" selection-start-column="33" selection-end-line="46" selection-end-column="52" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ConjunctionSet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="385">
+          <caret line="76" column="117" lean-forward="false" selection-start-line="76" selection-start-column="117" selection-end-line="76" selection-end-column="117" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
           </folding>
         </state>
       </provider>
