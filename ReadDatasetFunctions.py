@@ -7,24 +7,27 @@ def read_iris_data():
     data = pd.DataFrame(iris.data[:], columns=iris.feature_names)
     data['class'] = [iris.target_names[i] for i in iris.target]
     y_column='class'
+    feature_types = ['float']*4
     x_columns=iris.feature_names
-    return data,x_columns,y_column
+    return data,x_columns,y_column,feature_types
 def read_winery_data():
     x_columns=['Alcohol','Malic acid','Ash','Alcalinity of ash','Magnesium',
                                      'Total phenols','Flavanoids','Nonflavanoid phenols','Proanthocyanins',
                                     'Color intensity','Hue','OD280/OD315 of diluted wines','Proline']
     y_column='class'
     data = pd.read_csv("datasets/wine.data",names=[y_column]+x_columns)
-    return data, x_columns, y_column
+    feature_types = ['float'] * 4 + ['int'] + ['float'] * 7 + ['int']
+    return data, x_columns, y_column,feature_types
 def read_breast_cancer_data():
-    x_columns = ['code_number', 'Clump_thickness', 'Uniformity of Cell Size', 'Uniformity of Cell Shape',
+    x_columns = ['Clump_thickness', 'Uniformity of Cell Size', 'Uniformity of Cell Shape',
              'Marginal Adhesion', 'Single Epithelial Cell Size'
         , 'Bare Nuclei', 'Bland Chromatin', 'Normal Nucleoli', 'Mitoses']
     y_column='class'
+    feature_types = ['float'] * 9
     data = pd.read_csv('datasets/breast-cancer-wisconsin.data',names=x_columns+[y_column])
     data = data[data['Bare Nuclei'] != '?']
     data['Bare Nuclei'] = [int(i) for i in data['Bare Nuclei']]
-    return data, x_columns, y_column
+    return data, x_columns, y_column, feature_types
 def read_tic_tac_toe_dataset():
     x_columns=['top - left - square','top - middle - square','top - right - square','middle - left - square',
                'middle - middle - square','middle - right - square','bottom - left - square','bottom - middle - square','bottom - right - square']
@@ -39,8 +42,10 @@ def read_tic_tac_toe_dataset():
 def read_australian():
     x_columns = ["A" + str(i) for i in range(14)]
     y_column='class'
+    feature_types = ['int', 'float', 'float', 'int', 'int', 'int', 'float', 'int', 'int', 'int', 'int', 'int', 'int',
+                     'int', 'int']
     data = pd.read_csv("datasets/australian.dat", sep=" ", names=x_columns+['class'])
-    return data,x_columns,y_column
+    return data,x_columns,y_column,feature_types
 def read_nurse():
     x_columns = ['x' + str(i) for i in range(8)]
     y_column='class'

@@ -4,13 +4,14 @@ from operator import mul
 from functools import reduce
 EPSILON=0.001
 class Branch:
-    def __init__(self,feature_names,label_names,label_probas=None,number_of_samples=None):
+    def __init__(self,feature_names,feature_types,label_names,label_probas=None,number_of_samples=None):
         """Branch inatance can be initialized in 2 ways. One option is to initialize an empty branch
         (only with a global number of features and number of class labels) and gradually add
         conditions - this option is relevant for the merge implementation.
         Second option is to get the number of samples in branch and the labels
         probability vector - relevant for creating a branch out of an existing tree leaf.
         """
+        self.feature_types=feature_types
         self.label_names=label_names
         self.number_of_features=len(feature_names)
         self.feature_names=feature_names
@@ -36,6 +37,9 @@ class Branch:
         for i in range(self.number_of_features):
             if self.features_upper[i] <= other_branch.features_lower[i] + EPSILON or self.features_lower[i] + EPSILON >= other_branch.features_upper[i]:
                 return True
+            if self.feature_types[i]=='int' and min(self.features_upper[i],other_branch.features_upper[i])%1>0 and \
+                                    min(self.features_upper[i],other_branch.features_upper[i])-max(self.features_lower[i],other_branch.features_lower[i])<1:
+                return True
         return False
     def mergeBranch(self, other_branch):
         """
@@ -44,7 +48,7 @@ class Branch:
         """
         new_label_probas=[k+v for k,v in zip(self.label_probas,other_branch.label_probas)]
         new_number_of_samples=np.sqrt(self.number_of_samples * other_branch.number_of_samples)
-        new_b = Branch(self.feature_names,self.label_names,new_label_probas,new_number_of_samples)
+        new_b = Branch(self.feature_names,self.feature_types,self.label_names,new_label_probas,new_number_of_samples)
         new_b.features_upper, new_b.features_lower = list(self.features_upper), list(self.features_lower)
         for feature in range(self.number_of_features):
             new_b.addCondition(feature, other_branch.features_upper[feature], 'upper')
@@ -98,12 +102,15 @@ class Branch:
         return  features
 
     def calculate_branch_probability_by_ecdf(self, ecdf):
-        epsilon=0.00001
         features_probabilities=1
         for i,lower,upper in zip(range(len(ecdf.keys())),self.features_lower,self.features_upper):
             probs=ecdf[i]([lower,upper])
-            features_probabilities=features_probabilities*(probs[1]-probs[0]+ epsilon)
+            features_probabilities=features_probabilities*(probs[1]-probs[0])
         return features_probabilities
+    def is_excludable_branch(self):
+        if max(self.label_probas)/np.sum(self.label_probas)>0.8:
+            return True
+        return False
     def is_excludable_branch(self):
         if max(self.label_probas)/np.sum(self.label_probas)>0.8:
             return True
@@ -113,12 +120,3 @@ class Branch:
             if self.features_upper[feature] + EPSILON < other.features_lower[feature] or other.features_upper[feature] + EPSILON < self.features_lower[feature]:
                 return False
         return True
-    def add_branch(self,other):
-        new_number_of_samples = np.sqrt(self.number_of_samples * other.number_of_samples)
-        new_b = Branch(self.feature_names, self.label_names, self.label_probas, new_number_of_samples)
-        for feature in range(self.number_of_features):
-            new_b.features_upper[feature] = max(self.features_upper[feature],other.features_upper[feature])
-            new_b.features_lower[feature] = min(self.features_lower[feature],other.features_lower[feature])
-        return new_b
-
-

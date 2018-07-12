@@ -26,7 +26,7 @@ class ExperimentSetting():
         self.experiments=[]
         for threshold in self.number_of_branches_threshold:
             for df_name in self.df_names:
-                df,x_columns,y_column=get_dataset_by_string(df_name)
+                df, x_columns, y_column, feature_types=get_dataset_by_string(df_name)
                 for num_of_estimators in self.number_of_esitmators:
                     for filter_approach in self.filter_approaches:
                         for parallel in self.parallels:
@@ -37,9 +37,9 @@ class ExperimentSetting():
                             d['filter_approach']=filter_approach
                             d['parallel'] = parallel
                             print(d)
-                            self.run_experiment(threshold,df,x_columns,y_column,d)
+                            self.run_experiment(threshold,df,x_columns,y_column,feature_types,d)
 
-    def run_experiment(self,branch_probability_threshold,df,x_columns,y_column,hyper_parameters_dict):
+    def run_experiment(self,branch_probability_threshold,df,x_columns,y_column,feature_types,hyper_parameters_dict):
         for i in range(self.num_of_iterations):
             print(i)
             num_of_estimators=hyper_parameters_dict['number_of_estimators']
@@ -50,13 +50,13 @@ class ExperimentSetting():
 
             #Training random forest
             start_temp=datetime.datetime.now()
-            rf = RandomForestClassifier(n_estimators=num_of_estimators,**self.fixed_params)
+            rf = RandomForestClassifier(n_estimators=num_of_estimators,min_samples_leaf=int(0.02*len(train_x)),**self.fixed_params)
             rf.fit(train_x, train_y)
             result_dict['random forest training time']=(datetime.datetime.now()-start_temp).total_seconds()
             self.classes_=rf.classes_
             #Create the conjunction set
             start_temp = datetime.datetime.now()
-            cs = ConjunctionSet(x_columns, df, rf,hyper_parameters_dict['max_number_of_branches'],filter_approach)
+            cs = ConjunctionSet(x_columns, df, rf, feature_types, hyper_parameters_dict['max_number_of_branches'],filter_approach)
             result_dict['conjunction set training time'] = (datetime.datetime.now() - start_temp).total_seconds()
             result_dict['number of branches per iteration'] = cs.number_of_branches_per_iteration
             result_dict['number_of_branches'] = len(cs.conjunctionSet)

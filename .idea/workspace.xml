@@ -2,17 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="800159f0-87b6-42c3-943b-01c5d68c3c31" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/SplittingFunctions.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.ipynb_checkpoints/Experiment test-checkpoint.ipynb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Experiment test.ipynb" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/datasets/~$stralian.doc" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.ipynb_checkpoints/Untitled-checkpoint.ipynb" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/Untitled-checkpoint.ipynb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Branch.py" afterPath="$PROJECT_DIR$/Branch.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CDF development.ipynb" afterPath="$PROJECT_DIR$/CDF development.ipynb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConjunctionSet.py" afterPath="$PROJECT_DIR$/ConjunctionSet.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Experiment parallelized.ipynb" afterPath="$PROJECT_DIR$/Experiment parallelized.ipynb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ExperimentSetting.py" afterPath="$PROJECT_DIR$/ExperimentSetting.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Node.py" afterPath="$PROJECT_DIR$/Node.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ReadDatasetFunctions.py" afterPath="$PROJECT_DIR$/ReadDatasetFunctions.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Test branches builder.ipynb" afterPath="$PROJECT_DIR$/Test branches builder.ipynb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Untitled.ipynb" afterPath="$PROJECT_DIR$/Untitled.ipynb" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -26,8 +24,8 @@
       <file leaf-file-name="Branch.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Branch.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1632">
-              <caret line="99" column="4" lean-forward="false" selection-start-line="99" selection-start-column="4" selection-end-line="105" selection-end-column="37" />
+            <state relative-caret-position="572">
+              <caret line="107" column="76" lean-forward="false" selection-start-line="107" selection-start-column="76" selection-end-line="107" selection-end-column="76" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -35,11 +33,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ConjunctionSet.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ConjunctionSet.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ConjunctionSet.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="385">
-              <caret line="76" column="117" lean-forward="false" selection-start-line="76" selection-start-column="117" selection-end-line="76" selection-end-column="117" />
+            <state relative-caret-position="1428">
+              <caret line="84" column="9" lean-forward="false" selection-start-line="84" selection-start-column="9" selection-end-line="84" selection-end-column="9" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
               </folding>
@@ -47,14 +45,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ExperimentSetting.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ExperimentSetting.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ExperimentSetting.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="38" column="33" lean-forward="false" selection-start-line="38" selection-start-column="28" selection-end-line="38" selection-end-column="33" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="204">
+              <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="42" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -84,8 +80,8 @@
       <file leaf-file-name="ReadDatasetFunctions.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ReadDatasetFunctions.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="674">
-              <caret line="46" column="33" lean-forward="true" selection-start-line="46" selection-start-column="33" selection-end-line="46" selection-end-column="52" />
+            <state relative-caret-position="708">
+              <caret line="65" column="27" lean-forward="true" selection-start-line="65" selection-start-column="14" selection-end-line="65" selection-end-column="27" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -139,25 +135,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>branch(</find>
-      <find>merge_</find>
-      <find>self.df</find>
-      <find>probas</find>
-      <find>print(</find>
-      <find>get_</find>
-      <find>get_bra</find>
-      <find>get_bran</find>
-      <find>set_ecdf</find>
-      <find>round</find>
-      <find>check</find>
-      <find>df</find>
-      <find>calculate_entr</find>
-      <find>#pr</find>
-      <find>label_</find>
-      <find>exclude_bran</find>
-      <find>self.merge_</find>
-      <find>self.filter</find>
-      <find>self.left.pre</find>
       <find>predict_probas</find>
       <find>conjunctionSet</find>
       <find>amoun</find>
@@ -169,7 +146,30 @@
       <find>get_value_metri</find>
       <find>node</find>
       <find>print</find>
+      <find>na</find>
+      <find>feature_na</find>
+      <find>number_of_numerical_features</find>
+      <find>number_of</find>
+      <find>f</find>
+      <find>features_upper</find>
+      <find>features_lower</find>
+      <find>add</find>
+      <find>addCondition</find>
+      <find>inner_merge</find>
+      <find>filter_con</find>
+      <find>mergebran</find>
+      <find>contra</find>
+      <find>branch(</find>
+      <find>add_branch</find>
+      <find>self.original</find>
+      <find>entropy</find>
+      <find>iteration</find>
+      <find>number of</find>
     </findStrings>
+    <replaceStrings>
+      <replace>numerical_features_lower</replace>
+      <replace>addNumericalCondition</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -185,11 +185,11 @@
         <option value="$PROJECT_DIR$/NewModelBuilder.py" />
         <option value="$PROJECT_DIR$/Experiment.py___jb_tmp___" />
         <option value="$PROJECT_DIR$/Experiment.py" />
-        <option value="$PROJECT_DIR$/Branch.py" />
         <option value="$PROJECT_DIR$/Node.py" />
-        <option value="$PROJECT_DIR$/ExperimentSetting.py" />
         <option value="$PROJECT_DIR$/SplittingFunctions.py" />
         <option value="$PROJECT_DIR$/ReadDatasetFunctions.py" />
+        <option value="$PROJECT_DIR$/Branch.py" />
+        <option value="$PROJECT_DIR$/ExperimentSetting.py" />
         <option value="$PROJECT_DIR$/ConjunctionSet.py" />
       </list>
     </option>
@@ -267,12 +267,13 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17864583" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980973" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -286,7 +287,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -707,16 +707,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Branch.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1632">
-          <caret line="99" column="4" lean-forward="false" selection-start-line="99" selection-start-column="4" selection-end-line="105" selection-end-column="37" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Node.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -725,10 +715,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ExperimentSetting.py">
+    <entry file="file://$PROJECT_DIR$/Branch.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="38" column="33" lean-forward="false" selection-start-line="38" selection-start-column="28" selection-end-line="38" selection-end-column="33" />
+        <state relative-caret-position="572">
+          <caret line="107" column="76" lean-forward="false" selection-start-line="107" selection-start-column="76" selection-end-line="107" selection-end-column="76" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
@@ -737,8 +727,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ReadDatasetFunctions.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="674">
-          <caret line="46" column="33" lean-forward="true" selection-start-line="46" selection-start-column="33" selection-end-line="46" selection-end-column="52" />
+        <state relative-caret-position="708">
+          <caret line="65" column="27" lean-forward="true" selection-start-line="65" selection-start-column="14" selection-end-line="65" selection-end-column="27" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
@@ -747,11 +737,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ConjunctionSet.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="385">
-          <caret line="76" column="117" lean-forward="false" selection-start-line="76" selection-start-column="117" selection-end-line="76" selection-end-column="117" />
+        <state relative-caret-position="1428">
+          <caret line="84" column="9" lean-forward="false" selection-start-line="84" selection-start-column="9" selection-end-line="84" selection-end-column="9" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ExperimentSetting.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="42" />
+          <folding />
         </state>
       </provider>
     </entry>
