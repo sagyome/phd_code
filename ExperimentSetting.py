@@ -11,6 +11,7 @@ from ReadDatasetFunctions import *
 from NewModelBuilder import *
 from sklearn.preprocessing import label_binarize
 from sklearn.metrics import roc_curve, auc
+import pickle
 
 class ExperimentSetting():
     def __init__(self,number_of_branches_threshold,df_names,number_of_estimators_list,fixed_params,
@@ -56,7 +57,7 @@ class ExperimentSetting():
             self.classes_=rf.classes_
             #Create the conjunction set
             start_temp = datetime.datetime.now()
-            cs = ConjunctionSet(x_columns, df, rf, feature_types, hyper_parameters_dict['max_number_of_branches'],filter_approach)
+            cs = ConjunctionSet(x_columns, train_x, rf, feature_types, hyper_parameters_dict['max_number_of_branches'],filter_approach)
             result_dict['conjunction set training time'] = (datetime.datetime.now() - start_temp).total_seconds()
             result_dict['number of branches per iteration'] = cs.number_of_branches_per_iteration
             result_dict['number_of_branches'] = len(cs.conjunctionSet)
@@ -82,6 +83,8 @@ class ExperimentSetting():
             result_dict.update(self.ensemble_measures(test_x,test_y,rf))
             result_dict.update(self.new_model_measures(test_x,test_y,new_model,branches_df))
             result_dict.update(self.decision_tree_measures(test_x,test_y,decision_tree_model))
+            with open('pickles/'+str(datetime.datetime.now()).replace(':','_'),'wb') as fp:
+                pickle.dump(result_dict, fp)
             self.experiments.append(result_dict)
     def decision_tree_measures(self,X,Y,dt_model):
         result_dict={}

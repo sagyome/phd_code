@@ -38,7 +38,8 @@ def read_tic_tac_toe_dataset():
     dv_data=pd.DataFrame(dv_data.toarray(),columns=dv.feature_names_)
     dv_data[y_column]=data[y_column]
     data=dv_data
-    return data, dv.feature_names_, y_column
+    feature_types = ['int']*len(dv.feature_names_)
+    return data, dv.feature_names_, y_column, feature_types
 def read_australian():
     x_columns = ["A" + str(i) for i in range(14)]
     y_column='class'
@@ -55,7 +56,40 @@ def read_nurse():
     dv_data = pd.DataFrame(dv_data.toarray(), columns=dv.feature_names_)
     dv_data[y_column] = data[y_column]
     data = dv_data
-    return data, dv.feature_names_, y_column
+    feature_types = ['int'] * len(dv.feature_names_)
+    return data, dv.feature_names_, y_column, feature_types
+def read_kohkiloyeh():
+    data = pd.read_excel('datasets/kohkiloyeh.xlsx')
+    y_column = 'pb'
+    x_columns = [col for col in data.columns if col!=y_column]
+    dv = DictVectorizer()
+    dv_data = dv.fit_transform([dict(row) for index, row in data[x_columns].iterrows()])
+    dv_data = pd.DataFrame(dv_data.toarray(), columns=dv.feature_names_)
+    dv_data[y_column] = data[y_column]
+    data = dv_data
+    feature_types = ['int'] * len(dv.feature_names_)
+    return data, dv.feature_names_, y_column, feature_types
+def read_haberman():
+    data = pd.read_csv('datasets/haberman.data',names=['Age','year_of_operation','number_of_positive_axiilary_nodes','class'])
+    y_column='class'
+    x_columns=[col for col in data.columns if col!='class']
+    feature_types = ['int']*len(x_columns)
+    return data, x_columns, y_column, feature_types
+def read_balance_scale():
+    data = pd.read_csv('datasets/balance-scale.data', names=['class', 'left-weight', 'left-dist', 'right-weight', 'right-dist'])
+    x_columns=data.columns[1:]
+    y_column='class'
+    feature_types = ['int']*4
+    return data, x_columns, y_column, feature_types
+def read_spambase():
+    x_columns = []
+    with open('datasets/spambase.names', 'r') as f:
+        for line in f:
+            x_columns.append(line.replace('\n', ''))
+    y_column = 'is_spam'
+    data = pd.read_csv('datasets/spambase.data', names=x_columns + [y_column])
+    feature_types = ['float'] * len(x_columns)
+    return data, x_columns, y_column, feature_types
 def get_dataset_by_string(s):
     if s=='iris':
         return read_iris_data()
@@ -67,5 +101,13 @@ def get_dataset_by_string(s):
         return read_australian()
     elif s == 'nurse':
         return read_nurse()
+    elif s == 'kohkiloyeh':
+        return read_kohkiloyeh()
+    elif s =='haberman':
+        return read_haberman()
     elif s=='tic-tac-toe':
         return read_tic_tac_toe_dataset()
+    elif s=='balance_scale':
+        return read_balance_scale()
+    elif s=='spambase':
+        return read_spambase()

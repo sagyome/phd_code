@@ -19,6 +19,7 @@ class Branch:
         self.features_lower=[-np.inf]*self.number_of_features #lower bound of the feature for the given rule
         self.label_probas=label_probas
         self.number_of_samples=number_of_samples #save number of samples in leaf (not relevant for the current model)
+        self.categorical_features_dict={}
     def addCondition(self, feature, threshold, bound):
         """
         This function gets feature index, its threshold for the condition and whether
@@ -27,6 +28,9 @@ class Branch:
         if bound == 'lower':
             if self.features_lower[feature] < threshold:
                 self.features_lower[feature] = threshold
+                if '=' in self.feature_names[feature] and threshold >= 0:
+                    splitted = self.feature_names[feature].split('=')
+                    self.categorical_features_dict[splitted[0]]=splitted[1]
         else:
             if self.features_upper[feature] > threshold:
                 self.features_upper[feature] = threshold
@@ -34,12 +38,16 @@ class Branch:
         """
         check wether Branch b can be merged with the "self" Branch. Returns Boolean answer.
         """
+        for categorical_feature in self.categorical_features_dict:
+            if categorical_feature in other_branch.categorical_features_dict and self.categorical_features_dict[categorical_feature] != other_branch.categorical_features_dict[categorical_feature]:
+                return True
         for i in range(self.number_of_features):
             if self.features_upper[i] <= other_branch.features_lower[i] + EPSILON or self.features_lower[i] + EPSILON >= other_branch.features_upper[i]:
                 return True
             if self.feature_types[i]=='int' and min(self.features_upper[i],other_branch.features_upper[i])%1>0 and \
                                     min(self.features_upper[i],other_branch.features_upper[i])-max(self.features_lower[i],other_branch.features_lower[i])<1:
                 return True
+
         return False
     def mergeBranch(self, other_branch):
         """
@@ -53,6 +61,8 @@ class Branch:
         for feature in range(self.number_of_features):
             new_b.addCondition(feature, other_branch.features_upper[feature], 'upper')
             new_b.addCondition(feature, other_branch.features_lower[feature], 'lower')
+        new_b.categorical_features_dict = dict(self.categorical_features_dict)
+        new_b.categorical_features_dict.update(dict(other_branch.categorical_features_dict))
         return new_b
     def toString(self):
         """
@@ -107,6 +117,12 @@ class Branch:
             probs=ecdf[i]([lower,upper])
             features_probabilities=features_probabilities*(probs[1]-probs[0])
         return features_probabilities
+    def calculate_branch_probability_by_range(self, ranges):
+        features_probabilities = 1
+        for range, lower, upper in zip(ranges, self.features_lower, self.features_upper):
+            probs = min(1,(upper-lower)/range)
+        features_probabilities = features_probabilities*probs
+        return features_probabilities
     def is_excludable_branch(self):
         if max(self.label_probas)/np.sum(self.label_probas)>0.8:
             return True
@@ -120,3 +136,4 @@ class Branch:
             if self.features_upper[feature] + EPSILON < other.features_lower[feature] or other.features_upper[feature] + EPSILON < self.features_lower[feature]:
                 return False
         return True
+

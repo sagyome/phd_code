@@ -3,9 +3,10 @@ import numpy as np
 import pandas as pd
 from statsmodels.distributions.empirical_distribution import ECDF
 from scipy.stats import entropy
+import networkx as nx
 
 class ConjunctionSet():
-    def __init__(self,feature_names,original_data,model, feature_types, amount_of_branches_threshold,filter_approach, exclusion_starting_point=10):
+    def __init__(self,feature_names,original_data, model, feature_types, amount_of_branches_threshold,filter_approach, exclusion_starting_point=10):
         self.amount_of_branches_threshold = amount_of_branches_threshold
         self.model = model
         self.feature_names = feature_names
@@ -14,6 +15,7 @@ class ConjunctionSet():
         self.filter_approach = filter_approach
         self.exclusion_starting_point = exclusion_starting_point
         self.set_ecdf(original_data)
+        self.get_ranges(original_data)
         self.generateBranches()
         self.number_of_branches_per_iteration = []
         self.buildConjunctionSet()
@@ -44,7 +46,7 @@ class ConjunctionSet():
         conjunctionSet=self.branches_lists[0]
         excluded_branches=[]
         for i,branch_list in enumerate(self.branches_lists[1:]):
-            #print('Iteration '+str(i+1)+": "+str(len(conjunctionSet))+" conjunctions")
+            print('Iteration '+str(i+1)+": "+str(len(conjunctionSet))+" conjunctions")
             conjunctionSet=self.merge_branch_with_conjunctionSet(branch_list,conjunctionSet)
             #print('i='+str(i))
             if i >= self.exclusion_starting_point:
@@ -73,6 +75,8 @@ class ConjunctionSet():
             branches_metrics = [b.calculate_branch_probability_by_ecdf(self.ecdf_dict)*(1-entropy(b.label_probas)) for b in cs]
         elif self.filter_approach=='entropy':
             branches_metrics = [-entropy(b.label_probas) for b in cs]
+        elif self.filter_approach=='range':
+            branches_metrics = [b.calculate_branch_probability_by_range(self.ranges) for b in cs]
         threshold=sorted(branches_metrics,reverse=True)[self.amount_of_branches_threshold-1]
         return [b for b,metric in zip(cs,branches_metrics) if metric >= threshold][:self.amount_of_branches_threshold]
 
@@ -99,7 +103,7 @@ class ConjunctionSet():
             if conjunction.containsInstance(inst):
                 return conjunction
     def set_ecdf(self,data):
-        self.ecdf_dict={indx:ECDF(data[col])for indx,col in enumerate(self.feature_names)}
+        self.ecdf_dict={i:ECDF(data.transpose()[i])for i in range(len(self.feature_names))}
     def group_by_label_probas(self,conjunctionSet):
         probas_hashes={}
         for i,b in enumerate(conjunctionSet):
@@ -108,3 +112,5 @@ class ConjunctionSet():
                 probas_hashes[probas_hash]=[]
             probas_hashes[probas_hash].append(i)
         return probas_hashes
+    def get_ranges(self,original_data):
+        self.ranges = [max(v)-min(v) for v in original_data.transpose()]
